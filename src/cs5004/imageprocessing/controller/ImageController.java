@@ -2,35 +2,18 @@ package cs5004.imageprocessing.controller;
 
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * The ImageController interface represents the controller component in the Model-View-Controller.
  * It defines the operations that can be performed on the ImageModel.
  */
 public interface ImageController {
-  void runProgram();
-
-  /**
-   * Processes a script command.
-   *
-   * @param script the script command to be processed.
-   */
-  void processCommand(String script);
-
-  /**
-   * Loads a script from a file.
-   *
-   * @param filename the path and name of the file to read.
-   */
-  void loadScript(String filename);
-
   /**
    * Load an image from an ASCII PPM file.
    *
    * @param filename the path to the file to load.
    */
-  void loadImage(String filename) throws IOException;
+  void loadImage(String filename) throws FileNotFoundException;
 
   /**
    * Create an image that visualizes the red channel of the current image.

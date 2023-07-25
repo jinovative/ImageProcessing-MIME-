@@ -1,81 +1,20 @@
 package cs5004.imageprocessing.model;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-
-import javax.imageio.ImageIO;
 
 /**
  * `ImageModelImpl` implements the `ImageModel` interface.
  * It stores the image data as a 2D array of `Pixel` objects and performs image processing tasks.
  */
 public class ImageModelImpl implements ImageModel {
-  private BufferedImage currentImage;
-  private Map<String, Filter> filters;
-  private Map<String, ColorTransformation> transformations;
   private Pixel[][] pixels;
-
-  public ImageModelImpl() {
-    this.filters = new HashMap<>();
-    this.transformations = new HashMap<>();
-    // populate the filters and transformations maps
-    this.filters.put("blur", new BlurFilter());
-    this.filters.put("sharpen", new SharpenFilter());
-    this.transformations.put("greyscale", new GreyscaleTransformation());
-    this.transformations.put("sepia", new SepiaToneTransformation());
-  }
-
-  @Override
-  public void loadImage(String filename) throws IOException {
-    this.currentImage = ImageIO.read(new File(filename));
-  }
-
-  @Override
-  public void saveImage(String filename) throws IOException {
-    String extension = filename.substring(filename.lastIndexOf(".") + 1);
-    ImageIO.write(this.currentImage, extension, new File(filename));
-  }
-
-  @Override
-  public void applyFilter(String filterName) {
-    if (filterName == null) {
-      throw new IllegalArgumentException("Filter name cannot be null");
-    }
-
-    Filter filterToApply = this.filters.get(filterName);
-
-    if (filterToApply == null) {
-      throw new IllegalArgumentException("No such filter: " + filterName);
-    }
-
-    this.currentImage = filterToApply.applyFilter(this.currentImage);
-  }
-
-  @Override
-  public void applyTransformation(String transformationName) {
-    if (transformationName == null) {
-      throw new IllegalArgumentException("Transformation name cannot be null");
-    }
-
-    ColorTransformation transformationToApply = this.transformations.get(transformationName);
-
-    if (transformationToApply == null) {
-      throw new IllegalArgumentException("No such transformation: " + transformationName);
-    }
-
-    this.currentImage = transformationToApply.applyTransformation(this.currentImage);
-  }
-
 
   @Override
   public void readPPM(String filename) throws FileNotFoundException {
