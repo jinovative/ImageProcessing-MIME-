@@ -47,29 +47,11 @@ public class ImageModelImpl implements ImageModel {
   }
 
   @Override
-  public void applyTransformation(ColorTransformation transformation) {
-    if (transformation == null) {
-      throw new IllegalArgumentException("Transformation cannot be null");
+  public void applyFilter(String filterName) {
+    if (filterName == null) {
+      throw new IllegalArgumentException("Filter name cannot be null");
     }
 
-    String transformationName = transformation.getTransformationName();
-    ColorTransformation transformationToApply = this.transformations.get(transformationName);
-
-    if (transformationToApply == null) {
-      throw new IllegalArgumentException("No such transformation: " + transformationName);
-    }
-
-    this.currentImage = transformationToApply.applyTransformation(this.currentImage);
-  }
-
-
-  @Override
-  public void applyFilter(Filter filter) {
-    if (filter == null) {
-      throw new IllegalArgumentException("Filter cannot be null");
-    }
-
-    String filterName = filter.getFilterName();
     Filter filterToApply = this.filters.get(filterName);
 
     if (filterToApply == null) {
@@ -77,6 +59,21 @@ public class ImageModelImpl implements ImageModel {
     }
 
     this.currentImage = filterToApply.applyFilter(this.currentImage);
+  }
+
+  @Override
+  public void applyTransformation(String transformationName) {
+    if (transformationName == null) {
+      throw new IllegalArgumentException("Transformation name cannot be null");
+    }
+
+    ColorTransformation transformationToApply = this.transformations.get(transformationName);
+
+    if (transformationToApply == null) {
+      throw new IllegalArgumentException("No such transformation: " + transformationName);
+    }
+
+    this.currentImage = transformationToApply.applyTransformation(this.currentImage);
   }
 
 

@@ -31,14 +31,14 @@ public interface ImageModel {
    *
    * @param transformation the transformation to apply.
    */
-  void applyTransformation(ColorTransformation transformation);
+  void applyTransformation(String transformationName);
 
   /**
    * Apply a filter to the current image.
    *
    * @param filter the filter to apply.
    */
-  void applyFilter(Filter filter);
+  void applyFilter(String filterName);
 
   /**
    * Load an image from an ASCII PPM file.
