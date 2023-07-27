@@ -1,6 +1,5 @@
 package cs5004.imageprocessing.model;
 
-import cs5004.imageprocessing.model.Pixel;
 import java.awt.image.BufferedImage;
 
 /**
@@ -9,9 +8,12 @@ import java.awt.image.BufferedImage;
 public class BlurFilter implements Filter {
 
   @Override
-  public BufferedImage applyFilter(BufferedImage image) {
-    int width = image.getWidth();
-    int height = image.getHeight();
+  public BufferedImage applyFilter(BufferedImage currentImage) {
+    if (currentImage == null) {
+      throw new IllegalArgumentException("Image is null!");
+    }
+    int width = currentImage.getWidth();
+    int height = currentImage.getHeight();
     BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
     for (int x = 0; x < width; x++) {
@@ -26,7 +28,7 @@ public class BlurFilter implements Filter {
             int xi = Math.min(Math.max(x + i, 0), width - 1);
             int yj = Math.min(Math.max(y + j, 0), height - 1);
 
-            int rgb = image.getRGB(xi, yj);
+            int rgb = currentImage.getRGB(xi, yj);
             Pixel pixel = new Pixel((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF);
 
             double kernelValue = FilterKernel.BLUR.getKernel()[i + 1][j + 1];
@@ -45,11 +47,12 @@ public class BlurFilter implements Filter {
     return result;
   }
 
-  @Override
-  public String getFilterName() {
-    return "Blur";
-  }
-
+  /**
+   * Clamps a color value to be within the valid range [0, 255].
+   *
+   * @param value the color value to be clamped
+   * @return the clamped color value
+   */
   private int clamp(double value) {
     return (int) Math.max(0, Math.min(255, value));
   }

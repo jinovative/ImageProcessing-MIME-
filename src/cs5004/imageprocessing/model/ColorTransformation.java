@@ -16,5 +16,4 @@ public interface ColorTransformation {
    */
   BufferedImage applyTransformation(BufferedImage image);
 
-  String getTransformationName();
 }

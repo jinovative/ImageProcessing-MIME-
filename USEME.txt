@@ -1,0 +1,40 @@
+Running the Program
+This application can be run in an interactive mode which will guide the user through the various commands it supports. Here's a breakdown of how the interaction works:
+
+Run the application. The application will prompt you to "Enter the name of the image file". Enter the name of the image file that you want to process. The location of the file must be in the Image Processing\folder.
+
+
+The application will then check if the input image file is a PPM file. Depending on the file type, it will provide a different set of operations that you can perform:
+
+If the file is a PPM file, it will display the following operations:
+"0. Save pixels as text"
+"1. Greyscale"
+"2. Brighter(10)"
+"3. Darker(-10)"
+"4. Flip"
+"5. Other(Custom)"
+"6. Modify another file"
+"7. Exit"
+
+If the file is not a PPM file, it will display the following operations:
+"0. Apply filter"
+"1. Apply color transformation"
+"2. Save image"
+"3. Exit"
+Input the number corresponding to the operation you want to perform.
+
+Depending on the operation you select, you may be asked to provide more inputs. For example, if you choose to save the image, you will be asked to "Enter the name of the image file to save".
+
+You can continue to perform more operations on the same image, or choose to exit the program.
+
+To perform operations on a different image, choose "6. Modify another file" (for PPM files) or re-run the program (for non-PPM files).
+
+To exit the program, choose "7. Exit" (for PPM files) or "3. Exit" (for non-PPM files).
+
+Note
+Each operation will be performed on the image in its current state. This means if you apply a filter to the image and then save it, the saved image will have the filter applied.
+If you encounter any errors during the execution of an operation, the program will display an error message and allow you to choose a different operation.
+In addition, since it supports multiple filters and transforms, it asks the user whether to continue operating before saving. The program is not terminated unless the user terminates it directly.
+If you enter an invalid selection at any prompt, the program will display a message "Invalid selection." and ask you to enter a valid selection.
+The "Other(Custom)" option for PPM files allows you to perform a custom operation. After selecting this option, you will be prompted to select a custom operation from a list of options.
+The program does not support concurrent modifications. If you want to apply different operations to the same original image, you need to re-run the program and load the image again.

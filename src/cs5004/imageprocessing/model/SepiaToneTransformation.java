@@ -30,11 +30,12 @@ public class SepiaToneTransformation implements ColorTransformation {
     return result;
   }
 
-  @Override
-  public String getTransformationName() {
-    return "SepiaTone";
-  }
-
+  /**
+   * Clamps a color value to be within the valid range [0, 255].
+   *
+   * @param value the color value to be clamped
+   * @return the clamped color value
+   */
   private int clamp(double value) {
     return (int) Math.max(0, Math.min(255, value));
   }

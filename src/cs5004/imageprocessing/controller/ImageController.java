@@ -2,18 +2,26 @@ package cs5004.imageprocessing.controller;
 
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * The ImageController interface represents the controller component in the Model-View-Controller.
  * It defines the operations that can be performed on the ImageModel.
  */
 public interface ImageController {
+
+  /**
+   * Starts the image processing program. This method contains the main control loop
+   * for handling user input and coordinating between the model and view.
+   */
+  void runProgram();
+
   /**
    * Load an image from an ASCII PPM file.
    *
    * @param filename the path to the file to load.
    */
-  void loadImage(String filename) throws FileNotFoundException;
+  void loadImage(String filename) throws IOException;
 
   /**
    * Create an image that visualizes the red channel of the current image.

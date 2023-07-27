@@ -1,0 +1,73 @@
+"C:\Program Files\Java\jdk-17.0.7.7-hotspot\bin\java.exe" -Dfile.encoding=windows-1252 -jar "C:\Users\jinyu\Desktop\WORK_PLACE\JAVA\5004\Image Processing\res\Image Processing.jar"
+Enter the name of the image file:
+snail.jpg
+Select an operation:
+0. Apply filter
+1. Apply color transformation
+2. Save image
+3. Exit
+0
+Select an operation:
+1. Apply blur filter
+2. Apply sharpen filter
+3. Save image
+4. Exit
+1
+Blur filter applied. Would you like to apply another filter?
+Select an operation:
+1. Apply blur filter
+2. Apply sharpen filter
+3. Save image
+4. Exit
+2
+Sharpen filter applied. Would you like to apply another filter?
+Select an operation:
+1. Apply blur filter
+2. Apply sharpen filter
+3. Save image
+4. Exit
+3
+Enter the name of the image file to save:
+snail-1blur1sharpen
+Image saved successfully!
+Would you like to perform more operations another image?
+1. Yes
+2. No, exit
+1
+Enter the name of the image file:
+snail.jpg
+Select an operation:
+0. Apply filter
+1. Apply color transformation
+2. Save image
+3. Exit
+1
+Select a color transformation:
+1. Greyscale
+2. Sepia tone
+1
+Greyscale transformation applied and image saved as snail.jpg-greyscale.png
+Do you want to perform another operation?
+1. Yes
+2. No, exit
+1
+Enter the name of the image file:
+snail.jpg
+Select an operation:
+0. Apply filter
+1. Apply color transformation
+2. Save image
+3. Exit
+1
+Select a color transformation:
+1. Greyscale
+2. Sepia tone
+2
+Sepia transformation applied and image saved as snail.jpg-sepia.png
+Do you want to perform another operation?
+1. Yes
+2. No, exit
+2
+Exiting the program.
+
+Process finished with exit code 0

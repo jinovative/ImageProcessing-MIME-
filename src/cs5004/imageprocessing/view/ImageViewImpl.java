@@ -21,7 +21,7 @@ public class ImageViewImpl implements ImageView {
 
   @Override
   public void displayMessage(String message) {
-    System.out.println("Message: " + message);
+    System.out.println(message);
   }
 
   @Override

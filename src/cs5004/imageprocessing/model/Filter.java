@@ -14,10 +14,4 @@ public interface Filter {
    */
   BufferedImage applyFilter(BufferedImage image);
 
-  /**
-   * Returns the name of the filter.
-   *
-   * @return the filter name
-   */
-  String getFilterName();
 }

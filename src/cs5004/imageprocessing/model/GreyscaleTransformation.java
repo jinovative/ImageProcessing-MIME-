@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
  * Class for converting an image to greyscale.
  */
 public class GreyscaleTransformation implements ColorTransformation {
+
   @Override
   public BufferedImage applyTransformation(BufferedImage image) {
     int width = image.getWidth();
@@ -28,11 +29,12 @@ public class GreyscaleTransformation implements ColorTransformation {
     return result;
   }
 
-  @Override
-  public String getTransformationName() {
-    return "Greyscale";
-  }
-
+  /**
+   * Clamps a color value to be within the valid range [0, 255].
+   *
+   * @param value the color value to be clamped
+   * @return the clamped color value
+   */
   private int clamp(double value) {
     return (int) Math.max(0, Math.min(255, value));
   }

@@ -2,12 +2,44 @@ package cs5004.imageprocessing.model;
 
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * The ImageModel interface represents the model component in the Model-View-Controller.
  * This interface contains methods for manipulating images.
  */
 public interface ImageModel {
+
+  /**
+   * Load an image from a file.
+   *
+   * @param filename the path and name of the file to read.
+   * @throws FileNotFoundException if the file is not found.
+   */
+
+  void loadImage(String filename) throws IOException;
+
+  /**
+   * Save the current image to a file.
+   *
+   * @param filename the path and name of the file to write.
+   */
+  void saveImage(String filename) throws IOException;
+
+  /**
+   * Apply a color transformation to the current image.
+   *
+   * @param transformationName the transformation to apply.
+   */
+  void applyTransformation(String transformationName);
+
+  /**
+   * Apply a filter to the current image.
+   *
+   * @param filterName the filter to apply.
+   */
+  void applyFilter(String filterName);
+
   /**
    * Load an image from an ASCII PPM file.
    *
