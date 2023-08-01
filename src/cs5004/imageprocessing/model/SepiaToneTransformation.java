@@ -17,13 +17,21 @@ public class SepiaToneTransformation implements ColorTransformation {
         int rgb = image.getRGB(x, y);
         Pixel pixel = new Pixel((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF);
 
-        int newRed = clamp(0.393 * pixel.getRed() + 0.769 * pixel.getGreen() + 0.189 * pixel.getBlue());
-        int newGreen = clamp(0.349 * pixel.getRed() + 0.686 * pixel.getGreen() + 0.168 * pixel.getBlue());
-        int newBlue = clamp(0.272 * pixel.getRed() + 0.534 * pixel.getGreen() + 0.131 * pixel.getBlue());
+        int newRed = clamp(0.393 * pixel.getRed()
+                + 0.769 * pixel.getGreen()
+                + 0.189 * pixel.getBlue());
+        int newGreen = clamp(0.349 * pixel.getRed()
+                + 0.686 * pixel.getGreen()
+                + 0.168 * pixel.getBlue());
+        int newBlue = clamp(0.272 * pixel.getRed()
+                + 0.534 * pixel.getGreen()
+                + 0.131 * pixel.getBlue());
 
         // Set the new pixel
         Pixel newPixel = new Pixel(newRed, newGreen, newBlue);
-        result.setRGB(x, y, ((newPixel.getRed() << 16) | (newPixel.getGreen() << 8) | newPixel.getBlue()));
+        result.setRGB(x, y, ((newPixel.getRed() << 16)
+                | (newPixel.getGreen() << 8)
+                | newPixel.getBlue()));
       }
     }
 

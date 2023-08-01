@@ -7,7 +7,11 @@ import cs5004.imageprocessing.model.Pixel;
  * It's used for displaying image processing results or errors to the user.
  */
 public class ImageViewImpl implements ImageView {
+  private ImageDisplayPanel imageDisplayPanel;
 
+  public ImageViewImpl(ImageDisplayPanel imageDisplayPanel) {
+    this.imageDisplayPanel = imageDisplayPanel;
+  }
   @Override
   public void displayUI() {
     System.out.println("UI is displayed.");
@@ -16,7 +20,7 @@ public class ImageViewImpl implements ImageView {
   @Override
   public void updateImage(Pixel[][] pixels) {
     System.out.println("Image updated with size: " + pixels.length + "x" + pixels[0].length);
-    System.out.println("Whole Pixels info : Option 0");
+    imageDisplayPanel.updateImage(pixels);
   }
 
   @Override

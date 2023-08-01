@@ -29,7 +29,8 @@ public class ImageModelImpl implements ImageModel {
 
   /**
    * Constructs an `ImageModelImpl` instance.
-   * Initializes the filters and transformations maps and populates them with the available filters and transformations.
+   * Initializes the filters and transformations maps.
+   * Populates them with the available filters and transformations.
    */
   public ImageModelImpl() {
     this.filters = new HashMap<>();
@@ -43,21 +44,68 @@ public class ImageModelImpl implements ImageModel {
 
   @Override
   public void loadImage(String filename) throws IOException {
+    // Read the image file
     this.currentImage = ImageIO.read(new File(filename));
 
-    // Get the file extension
-    String extension = filename.substring(filename.lastIndexOf(".") + 1);
+    // Get the width and height of the image
+    int width = this.currentImage.getWidth();
+    int height = this.currentImage.getHeight();
 
-    // Only call readPPM if the file is a PPM image
-    if (extension.equalsIgnoreCase("ppm")) {
-      this.readPPM(filename);
+    // Create a new 2D Pixel array
+    Pixel[][] pixels = new Pixel[height][width];
+
+    // Fill the Pixel array with data from the BufferedImage
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        // Get the RGB value of the pixel at (x, y)
+        int rgb = this.currentImage.getRGB(x, y);
+
+        // Extract the red, green, and blue components from the RGB value
+        int red = (rgb >> 16) & 0xFF;
+        int green = (rgb >> 8) & 0xFF;
+        int blue = rgb & 0xFF;
+
+        // Create a new Pixel object and put it in the array
+        pixels[y][x] = new Pixel(red, green, blue);
+      }
     }
+
+    // Set the Pixel array in the model
+    this.pixels = pixels;
   }
 
   @Override
   public void saveImage(String filename) throws IOException {
     String extension = filename.substring(filename.lastIndexOf(".") + 1);
     ImageIO.write(this.currentImage, extension, new File(filename));
+  }
+
+  private void loadImageFromBufferedImage(BufferedImage image) {
+    // Get the width and height of the image
+    int width = image.getWidth();
+    int height = image.getHeight();
+
+    // Create a new 2D Pixel array
+    Pixel[][] pixels = new Pixel[height][width];
+
+    // Fill the Pixel array with data from the BufferedImage
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        // Get the RGB value of the pixel at (x, y)
+        int rgb = image.getRGB(x, y);
+
+        // Extract the red, green, and blue components from the RGB value
+        int red = (rgb >> 16) & 0xFF;
+        int green = (rgb >> 8) & 0xFF;
+        int blue = rgb & 0xFF;
+
+        // Create a new Pixel object and put it in the array
+        pixels[y][x] = new Pixel(red, green, blue);
+      }
+    }
+
+    // Set the Pixel array in the model
+    this.pixels = pixels;
   }
 
   @Override
@@ -75,6 +123,9 @@ public class ImageModelImpl implements ImageModel {
     // Apply the filter to a copy of the current image, and set the result as the current image.
     BufferedImage imageCopy = deepCopy(this.currentImage);
     this.currentImage = filterToApply.applyFilter(imageCopy);
+
+    // Convert the filtered BufferedImage to Pixel[][]
+    loadImageFromBufferedImage(this.currentImage);
   }
 
   @Override
@@ -92,7 +143,11 @@ public class ImageModelImpl implements ImageModel {
     // Apply the transformation to a copy of the current image, and set the result as the current image.
     BufferedImage imageCopy = deepCopy(this.currentImage);
     this.currentImage = transformationToApply.applyTransformation(imageCopy);
+
+    // Convert the transformed BufferedImage to Pixel[][]
+    loadImageFromBufferedImage(this.currentImage);
   }
+
 
   /**
    * Creates a deep copy of a BufferedImage.

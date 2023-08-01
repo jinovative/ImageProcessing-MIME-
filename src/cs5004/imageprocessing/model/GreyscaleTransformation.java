@@ -18,7 +18,9 @@ public class GreyscaleTransformation implements ColorTransformation {
         int rgb = image.getRGB(x, y);
         Pixel pixel = new Pixel((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF);
 
-        double newColor = 0.2126 * pixel.getRed() + 0.7152 * pixel.getGreen() + 0.0722 * pixel.getBlue();
+        double newColor = 0.2126 * pixel.getRed()
+                + 0.7152 * pixel.getGreen()
+                + 0.0722 * pixel.getBlue();
 
         // Clamp the color values and set the new pixel
         int newRgb = ((clamp(newColor) << 16) | (clamp(newColor) << 8) | clamp(newColor));

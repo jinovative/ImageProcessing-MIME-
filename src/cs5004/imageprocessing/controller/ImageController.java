@@ -74,6 +74,10 @@ public interface ImageController {
    */
   void flipImage();
 
+  void applyFilter(String filterName) throws IllegalArgumentException;
+
+  void applyTransformation(String transformationName) throws IllegalArgumentException;
+
   /**
    * Saves the pixel data of the current image as a text file.
    * Each pixel is represented by its red, green, and blue components separated by commas,

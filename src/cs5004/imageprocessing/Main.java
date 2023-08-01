@@ -1,10 +1,7 @@
 package cs5004.imageprocessing;
 
-import cs5004.imageprocessing.controller.ImageControllerImpl;
-import cs5004.imageprocessing.model.ImageModel;
-import cs5004.imageprocessing.model.ImageModelImpl;
-import cs5004.imageprocessing.view.ImageView;
-import cs5004.imageprocessing.view.ImageViewImpl;
+import cs5004.imageprocessing.view.ApplicationWindow;
+
 
 /**
  * Main class that contains the entry point of the ImageProcessing program.
@@ -17,11 +14,9 @@ public class Main {
    * @param args The command-line arguments.
    */
   public static void main(String[] args) {
-    ImageModel model = new ImageModelImpl();
-    ImageView view = new ImageViewImpl();
-    ImageControllerImpl controller = new ImageControllerImpl(model, view);
+    // Create an instance of the main GUI class
+    ApplicationWindow window = new ApplicationWindow();
 
-    controller.runProgram();
   }
 }
 

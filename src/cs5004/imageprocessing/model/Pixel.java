@@ -53,6 +53,19 @@ public class Pixel {
     return b;
   }
 
+  public int getRGB() {
+    // Assuming that the color values are in the range 0-255
+    int red = this.getRed();
+    int green = this.getGreen();
+    int blue = this.getBlue();
+
+    // Pack the color values into an integer
+    int rgb = (red << 16) | (green << 8) | blue;
+
+    return rgb;
+  }
+
+
   /**
    * Checks if the given color value is valid (within the range 0-255).
    *

@@ -1,0 +1,78 @@
+package cs5004.imageprocessing.view;
+
+import javax.swing.*;
+import cs5004.imageprocessing.controller.ImageControllerImpl;
+import cs5004.imageprocessing.model.ImageModelImpl;
+
+public class ControlPanel extends JPanel {
+  private JButton flipButton;
+  private JButton grayscaleButton;
+  private JButton blurButton;
+  private JButton sharpenButton;
+  private JButton sepiaButton;
+  private JButton brightnessButton;
+  private ImageControllerImpl controller;
+  private ImageModelImpl model;
+  private ImageViewImpl view;
+
+  public ControlPanel(ImageControllerImpl controller) {
+    super();
+    this.controller = controller;
+
+    flipButton = new JButton("Flip");
+    flipButton.addActionListener(e -> controller.flipImage());
+
+    brightnessButton = new JButton("Set Brightness");
+    brightnessButton.addActionListener(e -> {
+      String input = JOptionPane.showInputDialog("Enter brightness value (-255 to 255)");
+      int brightnessValue = Integer.parseInt(input);
+      controller.changeBrightness(brightnessValue);
+    });
+
+    blurButton = new JButton("Blur");
+    blurButton.addActionListener(e -> controller.applyFilter("blur"));
+
+    sharpenButton = new JButton("Sharpen");
+    sharpenButton.addActionListener(e -> controller.applyFilter("sharpen"));
+
+    grayscaleButton = new JButton("Greyscale");
+    grayscaleButton.addActionListener(e -> controller.applyTransformation("greyscale"));
+
+    sepiaButton = new JButton("SepiaTone");
+    sepiaButton.addActionListener(e -> controller.applyTransformation("sepia"));
+
+
+
+    disableAllFeatures();
+
+    this.add(flipButton);
+    this.add(brightnessButton);
+    this.add(blurButton);
+    this.add(sharpenButton);
+    this.add(grayscaleButton);
+    this.add(sepiaButton);
+  }
+
+  public void enablePPMFeatures() {
+    disableAllFeatures();
+    flipButton.setEnabled(true);
+    brightnessButton.setEnabled(true);
+  }
+
+  public void enableNonPPMFeatures() {
+    disableAllFeatures();
+    blurButton.setEnabled(true);
+    sharpenButton.setEnabled(true);
+    sepiaButton.setEnabled(true);
+    grayscaleButton.setEnabled(true);
+  }
+
+  private void disableAllFeatures() {
+    flipButton.setEnabled(false);
+    grayscaleButton.setEnabled(false);
+    blurButton.setEnabled(false);
+    sharpenButton.setEnabled(false);
+    sepiaButton.setEnabled(false);
+    brightnessButton.setEnabled(false);
+  }
+}
