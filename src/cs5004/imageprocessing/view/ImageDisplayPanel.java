@@ -7,14 +7,26 @@ import javax.swing.*;
 
 import cs5004.imageprocessing.model.Pixel;
 
+/**
+ * `ImageDisplayPanel` class represents display area in the Image Processor application GUI.
+ * It is responsible for displaying the processed images.
+ */
 public class ImageDisplayPanel extends JPanel {
   private Image image;
 
+  /**
+   * Constructs an ImageDisplayPanel object.
+   */
   public ImageDisplayPanel() {
     super();
     this.setBackground(Color.WHITE);
   }
 
+  /**
+   * Sets the image to be displayed in this panel.
+   *
+   * @param image the Image to be displayed
+   */
   public void setImage(Image image) {
     System.out.println("setImage called");
     this.image = image;
@@ -22,7 +34,11 @@ public class ImageDisplayPanel extends JPanel {
     System.out.println("repaint called");
   }
 
-
+  /**
+   * Updates the displayed image based on a 2D array of Pixel objects.
+   *
+   * @param pixels the 2D Pixel array representing the image
+   */
   public void updateImage(Pixel[][] pixels) {
     // Check if the pixels array is empty
     if (pixels == null || pixels.length == 0 || pixels[0].length == 0) {
@@ -50,8 +66,12 @@ public class ImageDisplayPanel extends JPanel {
     System.out.println("Image width: " + newImage.getWidth() + ", height: " + newImage.getHeight());
   }
 
-
-
+  /**
+   * This method is called whenever Java determines that the screen needs to be updated.
+   * It draws the current image on the panel.
+   *
+   * @param g the Graphics object for drawing onto this panel
+   */
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);

@@ -4,6 +4,12 @@ import javax.swing.*;
 import cs5004.imageprocessing.controller.ImageControllerImpl;
 import cs5004.imageprocessing.model.ImageModelImpl;
 
+/**
+ * `ControlPanel` class represents a control panel section in the Image Processor application GUI.
+ * It includes various buttons for image processing operations.
+ *
+ * Depending on the type of image (PPM or Non-PPM), certain buttons are enabled or disabled.
+ */
 public class ControlPanel extends JPanel {
   private JButton flipButton;
   private JButton grayscaleButton;
@@ -15,6 +21,11 @@ public class ControlPanel extends JPanel {
   private ImageModelImpl model;
   private ImageViewImpl view;
 
+  /**
+   * Constructs a ControlPanel object with a given ImageController.
+   *
+   * @param controller the ImageController used to manipulate images
+   */
   public ControlPanel(ImageControllerImpl controller) {
     super();
     this.controller = controller;
@@ -53,12 +64,18 @@ public class ControlPanel extends JPanel {
     this.add(sepiaButton);
   }
 
+  /**
+   * Enables the image processing features that are specific to PPM images.
+   */
   public void enablePPMFeatures() {
     disableAllFeatures();
     flipButton.setEnabled(true);
     brightnessButton.setEnabled(true);
   }
 
+  /**
+   * Enables the image processing features that are specific to non-PPM images.
+   */
   public void enableNonPPMFeatures() {
     disableAllFeatures();
     blurButton.setEnabled(true);
@@ -67,6 +84,9 @@ public class ControlPanel extends JPanel {
     grayscaleButton.setEnabled(true);
   }
 
+  /**
+   * Disables all image processing features.
+   */
   private void disableAllFeatures() {
     flipButton.setEnabled(false);
     grayscaleButton.setEnabled(false);

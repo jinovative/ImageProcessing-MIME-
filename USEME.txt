@@ -1,40 +1,36 @@
-Running the Program
-This application can be run in an interactive mode which will guide the user through the various commands it supports. Here's a breakdown of how the interaction works:
+Graphical User Interface
+Once the program is launched, you will see the main application window. It contains a menu bar with options to load, transform, and save images.
 
-Run the application. The application will prompt you to "Enter the name of the image file". Enter the name of the image file that you want to process. The location of the file must be in the Image Processing\folder.
+Using Command-Line Arguments
+The program supports command-line arguments to perform operations in a script-like manner.
 
+-GUI Argument
+This is the default mode of operation and is the most user-friendly, especially for those who are not familiar with command-line interfaces.
 
-The application will then check if the input image file is a PPM file. Depending on the file type, it will provide a different set of operations that you can perform:
+-text Argument
+Run the program with the -text argument to use the program in interactive text mode: java -jar ImageProcessing.jar -text.
+-file Argument
+Create a text file containing the operations to be performed, one operation per line.
+Run the program with the -file argument followed by the path to the script file: java -jar ImageProcessing.jar -file script.txt.
 
-If the file is a PPM file, it will display the following operations:
-"0. Save pixels as text"
-"1. Greyscale"
-"2. Brighter(10)"
-"3. Darker(-10)"
-"4. Flip"
-"5. Other(Custom)"
-"6. Modify another file"
-"7. Exit"
+User Guide (Loading and Saving Images)
+The Image Processing Program also provides the ability to load and save images:
 
-If the file is not a PPM file, it will display the following operations:
-"0. Apply filter"
-"1. Apply color transformation"
-"2. Save image"
-"3. Exit"
-Input the number corresponding to the operation you want to perform.
+Load Image Button: This button opens a file chooser dialog to select an image file from your system. After selecting a file, the program determines if the image is a PPM image or a non-PPM image based on the file extension. Depending on the type of image, it enables the relevant features on the Control Panel (as described in the previous section). After that, it loads the selected image into the program.
 
-Depending on the operation you select, you may be asked to provide more inputs. For example, if you choose to save the image, you will be asked to "Enter the name of the image file to save".
+Save Image Button: This button opens a file chooser dialog to select the location and filename where the processed image should be saved. Clicking this button will save the current state of the image to the specified location. If the program encounters any issues while saving the image, it will print the error message.
 
-You can continue to perform more operations on the same image, or choose to exit the program.
+User Guide (Control Panel)
+The Control Panel in the Image Processing Program provides the following functionality:
 
-To perform operations on a different image, choose "6. Modify another file" (for PPM files) or re-run the program (for non-PPM files).
+Flip Button: This button flips the currently loaded image. Clicking this button will apply the flip operation to the image, creating a mirror image. This button is enabled for PPM images.
 
-To exit the program, choose "7. Exit" (for PPM files) or "3. Exit" (for non-PPM files).
+Set Brightness Button: This button changes the brightness of the currently loaded image. When you click this button, an input dialog will appear asking for a brightness value in the range of -255 to 255. Positive values increase the brightness, while negative values decrease it. This button is enabled for PPM images.
 
-Note
-Each operation will be performed on the image in its current state. This means if you apply a filter to the image and then save it, the saved image will have the filter applied.
-If you encounter any errors during the execution of an operation, the program will display an error message and allow you to choose a different operation.
-In addition, since it supports multiple filters and transforms, it asks the user whether to continue operating before saving. The program is not terminated unless the user terminates it directly.
-If you enter an invalid selection at any prompt, the program will display a message "Invalid selection." and ask you to enter a valid selection.
-The "Other(Custom)" option for PPM files allows you to perform a custom operation. After selecting this option, you will be prompted to select a custom operation from a list of options.
-The program does not support concurrent modifications. If you want to apply different operations to the same original image, you need to re-run the program and load the image again.
+Blur Button: This button applies a blur filter to the currently loaded image. Clicking this button will blur the image. This button is enabled for non-PPM images.
+
+Sharpen Button: This button applies a sharpen filter to the currently loaded image. Clicking this button will sharpen the image. This button is enabled for non-PPM images.
+
+Greyscale Button: This button applies a greyscale transformation to the currently loaded image. Clicking this button will convert the image to greyscale. This button is enabled for non-PPM images.
+
+SepiaTone Button: This button applies a sepia tone transformation to the currently loaded image. Clicking this button will convert the image to sepia tone. This button is enabled for non-PPM images.

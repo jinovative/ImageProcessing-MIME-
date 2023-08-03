@@ -109,5 +109,7 @@ public interface ImageModel {
    * @param filename the path and name of the file to write.
    */
   void writePPM(String filename);
+
+  int[][] getHistogramData();
 }
 

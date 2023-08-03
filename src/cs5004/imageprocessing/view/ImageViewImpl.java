@@ -9,6 +9,11 @@ import cs5004.imageprocessing.model.Pixel;
 public class ImageViewImpl implements ImageView {
   private ImageDisplayPanel imageDisplayPanel;
 
+  /**
+   * Constructs an ImageViewImpl object.
+   *
+   * @param imageDisplayPanel the ImageDisplayPanel used for displaying images
+   */
   public ImageViewImpl(ImageDisplayPanel imageDisplayPanel) {
     this.imageDisplayPanel = imageDisplayPanel;
   }

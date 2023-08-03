@@ -8,10 +8,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javax.swing.*;
+
 import cs5004.imageprocessing.model.ColorTransformation;
 import cs5004.imageprocessing.model.Filter;
 import cs5004.imageprocessing.model.ImageModel;
 import cs5004.imageprocessing.model.Pixel;
+import cs5004.imageprocessing.view.HistogramPanel;
 import cs5004.imageprocessing.view.ImageView;
 
 /**
@@ -22,6 +25,7 @@ public class ImageControllerImpl implements ImageController {
 
   private final ImageModel model;
   private final ImageView view;
+  private HistogramPanel histogramPanel;
 
   /**
    * Constructs `ImageControllerImpl` with specified model and view.
@@ -29,9 +33,10 @@ public class ImageControllerImpl implements ImageController {
    * @param model the model for image processing tasks
    * @param view the view for displaying images and errors
    */
-  public ImageControllerImpl(ImageModel model, ImageView view) {
+  public ImageControllerImpl(ImageModel model, ImageView view, HistogramPanel histogramPanel) {
     this.model = model;
     this.view = view;
+    this.histogramPanel = histogramPanel;
   }
 
 
@@ -55,18 +60,28 @@ public class ImageControllerImpl implements ImageController {
 
     // Update the image in the ImageDisplayPanel
     view.updateImage(model.getPixels());
+    int[][] histogramData = model.getHistogramData();
+    histogramPanel.updateHistogramData(histogramData[0], histogramData[1], histogramData[2], histogramData[3]);
   }
 
   @Override
   public void changeBrightness(int amount) {
     model.modifyBrightness(amount);
     view.updateImage(model.getPixels());
+    // Update the histogram data
+    int[][] histogramData = model.getHistogramData();
+    histogramPanel.updateHistogramData(histogramData[0], histogramData[1], histogramData[2], histogramData[3]);
+
   }
 
   @Override
   public void flipImage() {
     model.flipImage();
     view.updateImage(model.getPixels());
+    // Update the histogram data
+    int[][] histogramData = model.getHistogramData();
+    histogramPanel.updateHistogramData(histogramData[0], histogramData[1], histogramData[2], histogramData[3]);
+
   }
 
   @Override
@@ -74,6 +89,10 @@ public class ImageControllerImpl implements ImageController {
     try {
       model.applyFilter(filterName);
       view.updateImage(model.getPixels());
+
+      // Update the histogram data
+      int[][] histogramData = model.getHistogramData();
+      histogramPanel.updateHistogramData(histogramData[0], histogramData[1], histogramData[2], histogramData[3]);
     } catch (NullPointerException e) {
       view.displayError("No image loaded. Please load an image first before applying a filter.");
     } catch (IllegalArgumentException e) {
@@ -87,10 +106,91 @@ public class ImageControllerImpl implements ImageController {
     try {
       model.applyTransformation(transformationName);
       view.updateImage(model.getPixels());
+
+      // Update the histogram data
+      int[][] histogramData = model.getHistogramData();
+      histogramPanel.updateHistogramData(histogramData[0], histogramData[1], histogramData[2], histogramData[3]);
     } catch (NullPointerException e) {
       view.displayError("No image loaded. Please load an image first before applying a transformation.");
     } catch (IllegalArgumentException e) {
       view.displayError(e.getMessage());
+    }
+  }
+
+  @Override
+  public void saveImage(String filename) {
+    try {
+      // Check if the filename has an extension
+      int lastDotIndex = filename.lastIndexOf(".");
+      if (lastDotIndex == -1 || lastDotIndex == filename.length() - 1) {
+        JOptionPane.showMessageDialog(null, "Please include an extension in the filename.");
+        return;
+      }
+
+      // Get the extension
+      String extension = filename.substring(lastDotIndex + 1);
+
+      // Save the image with the appropriate method based on the extension
+      if (extension.equals("ppm")) {
+        model.writePPM(filename);
+      } else {
+        model.saveImage(filename);
+      }
+    } catch (IOException e) {
+      JOptionPane.showMessageDialog(null, "Error saving image: " + filename);
+    }
+  }
+
+  @Override
+  public void extractRedChannel() {
+    model.extractRedChannel();
+    view.updateImage(model.getPixels());
+    }
+
+  @Override
+  public void extractGreenChannel() {
+    model.extractGreenChannel();
+    view.updateImage(model.getPixels());
+    }
+
+  @Override
+  public void extractBlueChannel() {
+    model.extractBlueChannel();
+    view.updateImage(model.getPixels());
+    }
+
+  @Override
+  public void extractIntensity() {
+    model.extractIntensity();
+    view.updateImage(model.getPixels());
+    }
+
+
+  @Override
+  public void extractValue() {
+    model.extractValue();
+    view.updateImage(model.getPixels());
+  }
+
+  @Override
+  public void extractLuma() {
+    model.extractLuma();
+    view.updateImage(model.getPixels());
+  }
+
+  @Override
+  public void convertToGreyscale(String method) {
+    model.convertToGreyscale(method);
+    view.updateImage(model.getPixels());
+  }
+
+  @Override
+  public void overwrite(String filename) {
+    try {
+      model.loadImage(filename);
+      view.updateImage(model.getPixels());
+    } catch (IOException e) {
+      throw new RuntimeException("Error loading image: " + filename, e);
     }
   }
 
@@ -114,71 +214,6 @@ public class ImageControllerImpl implements ImageController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  @Override
-  public void saveImage(String filename) {
-    try {
-      if (filename.endsWith(".ppm")) {
-        model.writePPM("res/" + filename);
-      } else {
-        model.saveImage("res/" + filename);
-      }
-    } catch (IOException e) {
-      throw new RuntimeException("Error saving image: " + filename, e);
-    }
-  }
-
-  @Override
-  public void overwrite(String filename) {
-    try {
-      model.loadImage(filename);
-      view.updateImage(model.getPixels());
-    } catch (IOException e) {
-      throw new RuntimeException("Error loading image: " + filename, e);
-    }
-  }
-
-  @Override
-  public void extractRedChannel() {
-    model.extractRedChannel();
-    view.updateImage(model.getPixels());
-  }
-
-  @Override
-  public void extractGreenChannel() {
-    model.extractGreenChannel();
-    view.updateImage(model.getPixels());
-  }
-
-  @Override
-  public void extractBlueChannel() {
-    model.extractBlueChannel();
-    view.updateImage(model.getPixels());
-  }
-
-  @Override
-  public void extractValue() {
-    model.extractValue();
-    view.updateImage(model.getPixels());
-  }
-
-  @Override
-  public void extractIntensity() {
-    model.extractIntensity();
-    view.updateImage(model.getPixels());
-  }
-
-  @Override
-  public void extractLuma() {
-    model.extractLuma();
-    view.updateImage(model.getPixels());
-  }
-
-  @Override
-  public void convertToGreyscale(String method) {
-    model.convertToGreyscale(method);
-    view.updateImage(model.getPixels());
   }
 
   @Override
@@ -451,6 +486,36 @@ public class ImageControllerImpl implements ImageController {
     while (selection != 7);
 
     scanner.close();
+  }
+
+  /**
+   * Executes a command provided as a string. The command string should start with keywords.
+   * Supported operations are "load_image", "apply_filter", "apply_transformation", "save_image".
+   *
+   * @param command the command to execute, as a string
+   * @throws IOException if there is an error loading or saving an image
+   * @throws IllegalArgumentException if the operation keyword is not recognized
+   */
+  public void executeCommand(String command) throws IOException {
+    String[] parts = command.split(" ");
+    String operation = parts[0];
+
+    switch (operation) {
+      case "load_image":
+        loadImage(parts[1]);
+        break;
+      case "apply_filter":
+        applyFilter(parts[1]);
+        break;
+      case "apply_transformation":
+        applyTransformation(parts[1]);
+        break;
+      case "save_image":
+        saveImage(parts[1]);
+        break;
+      default:
+        throw new IllegalArgumentException("Invalid command: " + command);
+    }
   }
 
 }

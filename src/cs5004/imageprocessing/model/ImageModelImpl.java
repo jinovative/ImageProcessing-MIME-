@@ -80,6 +80,11 @@ public class ImageModelImpl implements ImageModel {
     ImageIO.write(this.currentImage, extension, new File(filename));
   }
 
+  /**
+   * Converts a BufferedImage into a 2D Pixel array and stores it in the model.
+   *
+   * @param image the BufferedImage to convert and load into the model
+   */
   private void loadImageFromBufferedImage(BufferedImage image) {
     // Get the width and height of the image
     int width = image.getWidth();
@@ -307,18 +312,6 @@ public class ImageModelImpl implements ImageModel {
   }
 
   @Override
-  public void extractValue() {
-    // Value is the maximum of the three color channels.
-    for (int i = 0; i < this.pixels.length; i++) {
-      for (int j = 0; j < this.pixels[i].length; j++) {
-        int value = Math.max(Math.max(this.pixels[i][j].getRed(),
-                this.pixels[i][j].getGreen()), this.pixels[i][j].getBlue());
-        this.pixels[i][j] = new Pixel(value, value, value);
-      }
-    }
-  }
-
-  @Override
   public void extractIntensity() {
     // Intensity is the average of the three color channels.
     for (int i = 0; i < this.pixels.length; i++) {
@@ -326,6 +319,18 @@ public class ImageModelImpl implements ImageModel {
         int intensity = (this.pixels[i][j].getRed()
                 + this.pixels[i][j].getGreen() + this.pixels[i][j].getBlue()) / 3;
         this.pixels[i][j] = new Pixel(intensity, intensity, intensity);
+      }
+    }
+  }
+
+  @Override
+  public void extractValue() {
+    // Value is the maximum of the three color channels.
+    for (int i = 0; i < this.pixels.length; i++) {
+      for (int j = 0; j < this.pixels[i].length; j++) {
+        int value = Math.max(Math.max(this.pixels[i][j].getRed(),
+                this.pixels[i][j].getGreen()), this.pixels[i][j].getBlue());
+        this.pixels[i][j] = new Pixel(value, value, value);
       }
     }
   }
@@ -416,5 +421,27 @@ public class ImageModelImpl implements ImageModel {
       throw new IllegalArgumentException("Error occurred while writing to file: " + filename);
     }
   }
+
+  public int[][] getHistogramData() {
+    Pixel[][] pixels = this.getPixels();
+
+    int[][] histogramData = new int[4][256];  // 4 histograms, 256 intensity levels each
+
+    for (int i = 0; i < pixels.length; i++) {
+      for (int j = 0; j < pixels[i].length; j++) {
+        int red = pixels[i][j].getRed();
+        int green = pixels[i][j].getGreen();
+        int blue = pixels[i][j].getBlue();
+
+        histogramData[0][red]++;
+        histogramData[1][green]++;
+        histogramData[2][blue]++;
+        histogramData[3][(red + green + blue) / 3]++;  // average intensity
+      }
+    }
+
+    return histogramData;
+  }
+
 }
 
